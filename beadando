@@ -1,0 +1,105 @@
+#!/bin/bash
+
+MENU(){
+    clear
+    echo "Válassz egy feladatot!"
+    echo ""
+    echo "1. Meghívó a fesztiválra"
+    echo "2. Háromszög kerülete"
+    echo "3. Osztályzat"
+    echo "4. Benne van-e?"
+    echo "Bármelyik karakter, ami nincs benne a listában: Kilépés"
+    echo ""
+}
+
+VALASZTAS(){
+    echo -n "Írd be a sorszámot: "
+    read VALASZ
+    case $VALASZ in
+	1) MEGHIVO ;;
+	2) KERULET ;;
+	3) OSZTALYZAT ;;
+	4) BENNEVAN ;;
+	*) exit ;;
+    esac
+}
+
+
+LASSIT(){
+    echo ""
+    echo "A folytatáshoz nyomja meg az ENTER gombot."
+    read fackEnterKey
+}
+
+
+
+MEGHIVO(){
+clear
+echo -n "Add meg a neved: "
+read NEV
+echo -n "Add meg , hogy melyik nap szeretnél jönni az eseményre: "
+read NAP
+echo -n "Add meg, hogy milyen e-mail címen érünk el: "
+read EMAIL
+
+cat <<UDV
+
+    Szeretettel meghívjuk kedves ${NEV} az idei Filmfesztiválra, ami
+egész héten tart. Az Ön meghívója erre a napra szól: ${NAP}.
+A részletekről a(z) ${EMAIL} e-mail címen keresztül fogjuk tájékoztatni.
+UDV
+LASSIT
+}
+
+KERULET(){
+clear
+echo -n "Add meg a háromszög A oldalát: "
+read A
+echo -n "Add meg a háromszög B oldalát: "
+read B
+echo -n "Add meg a háromszög C oldalát: "
+read C
+KER=$(expr $A + $B + $C )
+cat <<KIR
+A háromszög kerülete ${KER}.
+KIR
+LASSIT
+}
+
+
+OSZTALYZAT(){
+clear
+echo -n "Milyen lett az évvégi jegyed a tantárgyból (1-5): "
+read TT
+
+if [ $TT -lt 2 -a $TT -gt 0 ]
+then
+    echo "Sajnos nem teljesítetted a tantárgyat."
+elif [ $TT -gt 4 -a $TT -lt 6 ]
+then
+    echo "Szép munka!"
+elif [ $TT -eq 2 -o $TT -eq 3 -o $TT -eq 4 ]
+then
+    echo "Átmentél!"
+else
+    echo "Ilyen jegy nem létezik."
+fi
+LASSIT
+}
+
+
+BENNEVAN(){
+clear
+    echo -n "Írjál be egy pozitív egész számot: "
+    read EGESZ
+    [ $EGESZ -ge 1 ] && VALASZ="A szám $EGESZ." || VALASZ="A szám nem pozitív egész szám."
+    echo $VALASZ
+LASSIT
+}
+
+while true
+do
+    MENU
+    VALASZTAS
+done
+
