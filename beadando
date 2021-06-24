@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#Név: Holló Szilárd Dávid
+#Neptun-kód: E5CUSC
+
+
 MENU(){
     clear
     echo "Válassz egy feladatot!"
@@ -12,6 +16,7 @@ MENU(){
     echo ""
 }
 
+#Többirányú feltételes elágazás, ha beírom a sorszámot, azt a függvényt hívja meg, más karakter esetén kilép a programból.
 VALASZTAS(){
     echo -n "Írd be a sorszámot: "
     read VALASZ
@@ -24,7 +29,7 @@ VALASZTAS(){
     esac
 }
 
-
+#Ha egy függvény (feladat) lefutott, akkor ne ugorjon vissza rögtön a menübe, és legyen idő megnézni az eredményt. A függvény utasításai végén van rá szükség.
 LASSIT(){
     echo ""
     echo "A folytatáshoz nyomja meg az ENTER gombot."
@@ -42,6 +47,7 @@ read NAP
 echo -n "Add meg, hogy milyen e-mail címen érünk el: "
 read EMAIL
 
+# cat <<Név ... Név ==> arra jó, hogy ne kelljen minden sor kezdetén kiírni az echo-t, hanem folyamatosan tudjuk bevinni az adatokat.
 cat <<UDV
 
     Szeretettel meghívjuk kedves ${NEV} az idei Filmfesztiválra, ami
@@ -72,31 +78,33 @@ clear
 echo -n "Milyen lett az évvégi jegyed a tantárgyból (1-5): "
 read TT
 
-if [ $TT -lt 2 -a $TT -gt 0 ]
-then
+# Beágyazott if:
+if [ $TT -lt 2 -a $TT -gt 0 ] #Ha tantárgy kisebb, mint 2 és nagyobb, mint 0. ==> Írhattam volna: [ $TT -eq 1 ] (Ha tantárgy egyenlő 1-el.)
+then #akkor...
     echo "Sajnos nem teljesítetted a tantárgyat."
-elif [ $TT -gt 4 -a $TT -lt 6 ]
+elif [ $TT -gt 4 -a $TT -lt 6 ] #Ha tantárgy nagyobb, mint 4 és kisebb, mint 6. ==> vagy: [ $TT -eq 5 ] (Ha tantárgy egyenéő 5-el.)
 then
     echo "Szép munka!"
-elif [ $TT -eq 2 -o $TT -eq 3 -o $TT -eq 4 ]
+elif [ $TT -eq 2 -o $TT -eq 3 -o $TT -eq 4 ] # Ha tantárgy egyenlő 2-vel, VAGY 3-al, VAGY 4-el. ==> Írhattam volna: [ $TT -gt 1 -a $TT -lt 5 ] (Ha tantárgy nagyobb, mint 1 ÉS kisebb, mint 5.)
 then
     echo "Átmentél!"
-else
+else #Minden más esetben...(nem szám karakterek bevitelénél, vagy 1-5 intervallumon kívül eső számok esetén...)
     echo "Ilyen jegy nem létezik."
 fi
 LASSIT
 }
 
-
+# Rövid forma leírás (3 operandusú operátor)
 BENNEVAN(){
 clear
     echo -n "Írjál be egy pozitív egész számot: "
     read EGESZ
-    [ $EGESZ -ge 1 ] && VALASZ="A szám $EGESZ." || VALASZ="A szám nem pozitív egész szám."
+    [ $EGESZ -ge 1 ] && VALASZ="A szám $EGESZ." || VALASZ="A szám nem pozitív egész szám." #Ha kifejezés igaz, akkor a && karakterek utáni utasítást írja ki, ha hamis, akkor a || karakterek utáni utasítást írja ki.
     echo $VALASZ
 LASSIT
 }
 
+# While ciklus, ennek a segítségével térek vissza a menübe a feladatok végrehajtása után.
 while true
 do
     MENU
