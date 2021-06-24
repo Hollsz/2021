@@ -25,7 +25,7 @@ VALASZTAS(){
 	2) KERULET ;;
 	3) OSZTALYZAT ;;
 	4) BENNEVAN ;;
-	*) exit ;;
+	*) exit ;; #default eset, minden más esetben kilépés.
     esac
 }
 
